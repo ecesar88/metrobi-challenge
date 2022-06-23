@@ -1,0 +1,101 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  font-size: 1.5rem;
+}
+
+#rootContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  inset: 0;
+}
+
+#container {
+  width: 600px;
+  height: 800px;
+  background-color: aliceblue;
+  gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+#contentBody {
+  display: flex;
+  height: 800px;
+  width: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-grow: 1;
+}
+
+.beautify {
+  padding: 1rem;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+}
+
+#lowerContainer {
+  height: 30%;
+}
+
+#header {
+  background-color: rgb(38, 186, 255);
+}
+
+#hero {
+  background-color: violet;
+  flex-grow: 1;
+}
+
+#sidebar {
+  background-color: rgb(56, 175, 20);
+  flex-grow: 1;
+}
+
+#mainContent {
+  background-color: rgb(255, 208, 1);
+  flex-grow: 8;
+}
+
+#extraContent {
+  background-color: rgb(119, 119, 119);
+  flex-grow: 2;
+}
+
+#relatedImages {
+  background-color: rgb(1, 182, 122);
+  flex-grow: 8;
+}
+
+#relatedPosts {
+  background-color: pink;
+  flex-grow: 2;
+}
+
+#footer {
+  background-color: orange;
+}
