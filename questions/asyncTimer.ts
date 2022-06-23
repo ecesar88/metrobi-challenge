@@ -1,6 +1,4 @@
-let letters = ["a", "b", "c", "d", "e"];
-
-(function asyncTimer(arr: Array<string>) {
+function asyncTimer(arr: Array<string>) {
   let timer = 1000;
 
   for (let index = 0; index < arr.length; index++) {
@@ -9,4 +7,6 @@ let letters = ["a", "b", "c", "d", "e"];
 
     setTimeout(() => console.log(element, timer), timer);
   }
-})(letters);
+}
+
+export default asyncTimer;

@@ -1,12 +1,10 @@
-const string = "{([])}";
-
-(function lexicalBracketParser(bracketsString: string) {
+function lexicalBracketParser(bracketsString: string) {
   const dict = {
     opening: { "{": "{", "[": "[", "(": "(" },
     closing: { "}": "}", "]": "]", ")": ")" },
   };
 
-  const mapOpeningKeys = {
+  const mapOpeningKeys: Record<string, Record<string, string>> = {
     "{": {
       open: "{",
       close: "}",
@@ -22,7 +20,7 @@ const string = "{([])}";
   };
 
   // Generate an inverse map
-  let mapClosingKeys = {};
+  let mapClosingKeys: Record<string, any> = {};
 
   Object.keys(mapOpeningKeys).forEach((item) => {
     mapClosingKeys[mapOpeningKeys[item].close] = {
@@ -80,7 +78,9 @@ const string = "{([])}";
     JSON.stringify(openingHalf) === JSON.stringify(closingHalf);
 
   if (!areTheyEqual) isValid = false;
-  
+
   console.log(isValid);
   return isValid;
-})(string);
+}
+
+export default lexicalBracketParser;

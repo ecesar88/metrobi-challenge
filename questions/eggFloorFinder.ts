@@ -1,6 +1,4 @@
-const floors = Array.from({ length: 100 }, (_, idx) => idx + 1);
-
-(function eggFloorFinder(buildingFloors: number[]) {
+function eggFloorFinder(buildingFloors: number[]) {
   const dropTheEgg = (floor: number) => {
     // Returns true if the egg got broken
     const FLOOR_THE_EGG_BREAKS = 24; // We don't know that
@@ -48,4 +46,6 @@ const floors = Array.from({ length: 100 }, (_, idx) => idx + 1);
   }
 
   console.log(highestDropWithoutBreaking);
-})(floors);
+}
+
+export default eggFloorFinder;

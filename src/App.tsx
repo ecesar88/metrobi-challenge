@@ -1,6 +1,26 @@
 import "./App.css";
+import {
+  asyncTimer,
+  eggFloorFinder,
+  findDuplicateItems,
+  lexicalBracketParser,
+} from "../questions";
 
 function App() {
+  let letters = ["a", "b", "c", "d", "e"];
+  asyncTimer(letters);
+
+  const floors = Array.from({ length: 100 }, (_, idx) => idx + 1);
+  eggFloorFinder(floors);
+
+  let numbers = Array.from({ length: 1000000 }, (_, idx) => idx + 1);
+  const randomIndex = 1982;
+  numbers[randomIndex] = numbers[randomIndex - 1];
+  findDuplicateItems(numbers);
+
+  const string = "{([])}";
+  lexicalBracketParser(string);
+
   return (
     <div id="rootContainer">
       <div id="container">
