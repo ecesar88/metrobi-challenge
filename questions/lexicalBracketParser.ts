@@ -1,86 +1,70 @@
+const isOpeningBrace = (brace: string) => ["(", "{", "["].includes(brace);
+const isClosingBrace = (brace: string) => [")", "}", "]"].includes(brace);
+
+const sortObjectByKey = (objectToSort: Record<string, number>) =>
+  Object.keys(objectToSort)
+    .sort()
+    .reduce((obj: Record<string, number>, key: string) => {
+      obj[key] = objectToSort[key];
+      return obj;
+    }, {});
+
+const compareArrays = (arr1: unknown[], arr2: unknown[]) =>
+  arr1.join("") === arr2.join("");
+
+const sortAndCompare = (
+  obj1: Record<string, number>,
+  obj2: Record<string, number>
+) => {
+  const sortedObject1 = sortObjectByKey(obj1);
+  const sortedObject2 = sortObjectByKey(obj2);
+
+  return compareArrays(
+    Object.values(sortedObject1),
+    Object.values(sortedObject2)
+  );
+};
+
 function lexicalBracketParser(bracketsString: string) {
-  const dict = {
-    opening: { "{": "{", "[": "[", "(": "(" },
-    closing: { "}": "}", "]": "]", ")": ")" },
-  };
+  // If it's empty or the length is not pair, it makes no sense to continue
+  if (!bracketsString.length || bracketsString.length % 2 !== 0) {
+    return false;
+  }
 
-  const mapOpeningKeys: Record<string, Record<string, string>> = {
-    "{": {
-      open: "{",
-      close: "}",
-    },
-    "[": {
-      open: "[",
-      close: "]",
-    },
-    "(": {
-      open: "(",
-      close: ")",
-    },
-  };
+  const stack: string[] = [];
 
-  // Generate an inverse map
-  let mapClosingKeys: Record<string, any> = {};
-
-  Object.keys(mapOpeningKeys).forEach((item) => {
-    mapClosingKeys[mapOpeningKeys[item].close] = {
-      ...mapOpeningKeys[item],
-    };
+  // Add the items to the stack
+  bracketsString.split("").forEach((bracket) => {
+    stack.push(bracket);
   });
 
-  const stringArray = bracketsString.split("");
+  let openingBraces: string[] = [];
+  let closingBraces: string[] = [];
 
-  const findFirstClosingBrace = () => {
-    const closingBraces = Object.keys(dict.closing).join("");
-    return stringArray.findIndex((bracket) => closingBraces.includes(bracket));
-  };
-
-  const closingStartsAt = findFirstClosingBrace();
-
-  const openingArray = [...stringArray.slice(0, closingStartsAt)];
-
-  const closingArray = [
-    ...stringArray.slice(closingStartsAt, stringArray.length),
-  ].reverse();
-
-  let isValid = true;
-
-  // Check if every item doesn't open without closing
-  openingArray.forEach((openingChar) => {
-    if (!closingArray.includes(mapOpeningKeys[openingChar].close)) {
-      console.log("Closing bracket mismatch");
-      isValid = false;
-      return;
+  // Divide the array in opening and closing braces
+  stack.forEach((brace) => {
+    if (isOpeningBrace(brace)) {
+      openingBraces.push(brace);
+    } else if (isClosingBrace(brace)) {
+      closingBraces.push(brace);
     }
   });
 
-  // Check if every item doesn't close wihout opening
-
-  // Do the check
-  closingArray.forEach((closingChar) => {
-    if (!openingArray.includes(mapClosingKeys[closingChar].open)) {
-      console.log("Opening bracket mismatch");
-      isValid = false;
-      return;
-    }
+  // Count how many times a specific brace opened
+  let openingCount: Record<string, number> = {};
+  openingBraces.forEach((brace) => {
+    openingCount[brace] = openingCount[brace] ? openingCount[brace] + 1 : 1;
   });
 
-  // Check the order
-  const openingHalf = openingArray.map((openingChar, openingIdx) => {
-    return { [openingChar]: openingIdx };
+  // Count how many times a specific brace closed
+  let closingCount: Record<string, number> = {};
+  closingBraces.forEach((brace) => {
+    closingCount[brace] = closingCount[brace] ? closingCount[brace] + 1 : 1;
   });
 
-  const closingHalf = closingArray.map((closingChar, closingIdx) => {
-    return { [mapClosingKeys[closingChar].open]: closingIdx };
-  });
+  console.log(sortAndCompare(openingCount, closingCount));
 
-  const areTheyEqual =
-    JSON.stringify(openingHalf) === JSON.stringify(closingHalf);
-
-  if (!areTheyEqual) isValid = false;
-
-  console.log(isValid);
-  return isValid;
+  return sortAndCompare(openingCount, closingCount);
 }
 
 export default lexicalBracketParser;
