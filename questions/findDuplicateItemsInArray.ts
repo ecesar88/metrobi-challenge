@@ -9,7 +9,6 @@ function findDuplicateItems(array: number[]) {
 
   const duplicateItems = keys.filter((item) => dict[item] > 1);
 
-  console.log(duplicateItems);
   return duplicateItems;
 }
 

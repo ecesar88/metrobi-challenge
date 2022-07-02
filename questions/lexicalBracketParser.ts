@@ -62,8 +62,6 @@ function lexicalBracketParser(bracketsString: string) {
     closingCount[brace] = closingCount[brace] ? closingCount[brace] + 1 : 1;
   });
 
-  console.log(sortAndCompare(openingCount, closingCount));
-
   return sortAndCompare(openingCount, closingCount);
 }
 
