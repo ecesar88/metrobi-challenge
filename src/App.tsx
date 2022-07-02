@@ -5,25 +5,30 @@ import {
   findDuplicateItems,
   lexicalBracketParser,
 } from "../questions";
+import { useEffect } from "react";
 
 function App() {
-  let letters = ["a", "b", "c", "d", "e"];
-  console.log(`Async Timer > ${letters}`);
-  asyncTimer(letters);
+  useEffect(() => {
+    console.clear();
 
-  const floors = Array.from({ length: 100 }, (_, idx) => idx + 1);
-  console.log(`Egg Floor Finder > ${floors}`);
-  eggFloorFinder(floors);
+    let letters = ["a", "b", "c", "d", "e"];
+    console.log(`Async Timer > ${letters}`);
+    asyncTimer(letters);
 
-  let numbers = Array.from({ length: 1000000 }, (_, idx) => idx + 1);
-  const randomIndex = 1982;
-  numbers[randomIndex] = numbers[randomIndex - 1];
-  console.log(`Find duplicate items`);
-  findDuplicateItems(numbers);
+    let numbers = Array.from({ length: 1000000 }, (_, idx) => idx + 1);
+    const randomIndex = 1982;
+    numbers[randomIndex] = numbers[randomIndex - 1];
+    console.log(`Find duplicate items > ${findDuplicateItems(numbers)}`);
 
-  const string = "{([])}";
-  console.log(`Lexical Bracket Parser > ${string}`);
-  lexicalBracketParser(string);
+    const string = "()({[]}())";
+    console.log(
+      `Lexical Bracket Parser > ${string} ${lexicalBracketParser(string)}`
+    );
+
+    const floors = Array.from({ length: 100 }, (_, idx) => idx + 1);
+    // console.log(`Egg Floor Finder > ${floors}`);
+    eggFloorFinder(floors);
+  }, []);
 
   return (
     <div id="rootContainer">

@@ -1,10 +1,12 @@
 function eggFloorFinder(buildingFloors: number[]) {
   const dropTheEgg = (floor: number) => {
     // Returns true if the egg got broken
-    const FLOOR_THE_EGG_BREAKS = 24; // We don't know that
+    const FLOOR_THE_EGG_BREAKS = 89; // We don't know that
     let TIMES_THE_EGG_WAS_BROKEN = 0;
 
-    if (floor > FLOOR_THE_EGG_BREAKS) {
+    console.log(`Dropping the egg from floor nº ${floor}`);
+
+    if (floor >= FLOOR_THE_EGG_BREAKS) {
       TIMES_THE_EGG_WAS_BROKEN += 1;
       return [true, floor];
     }
@@ -22,15 +24,31 @@ function eggFloorFinder(buildingFloors: number[]) {
   const secondHalf = buildingFloors.slice(halfLength, buildingFloors.length);
 
   // Starting with the second half
-  for (let index = secondHalf.length; index >= 0; index--) {
+  const halfOfTheHalf = Math.floor(secondHalf.length / 2);
+
+  for (let index = halfOfTheHalf; index <= secondHalf.length; index++) {
     const [hasTheEggBroken, floorTheEggBroke] = dropTheEgg(
       index + firstHalf.length
     );
 
-    // If it broke here we need to start searching on the start of the array
+    // If it broke here we have found the floor it breaks
     if (hasTheEggBroken) {
-      firstBrokeAt = floorTheEggBroke as number;
-      break;
+      if (index === halfOfTheHalf) {
+        console.log(
+          `The egg has broken on the first floor of the half of the secondHalf: ${floorTheEggBroke}.\nTrying from the first half`
+        );
+        break;
+      }
+
+      console.log(`The egg has broken on floor nº ${floorTheEggBroke}`);
+
+      highestDropWithoutBreaking = +floorTheEggBroke - 1;
+
+      console.log(
+        `The highest floor the egg can be dropped without breaking is floor nº ${highestDropWithoutBreaking}`
+      );
+
+      return highestDropWithoutBreaking;
     }
   }
 
@@ -40,12 +58,15 @@ function eggFloorFinder(buildingFloors: number[]) {
 
     if (hasTheEggBroken) {
       // If it broke here we have now used our 2 available eggs and found the floor. It must be the floor below.
-      highestDropWithoutBreaking = (+floorTheEggBroke - 1) as number;
+      console.log(`The egg has broken on floor nº ${floorTheEggBroke}`);
+      highestDropWithoutBreaking = +floorTheEggBroke - 1;
       break;
     }
   }
 
-  console.log(highestDropWithoutBreaking);
+  console.log(
+    `The highest floor the egg can be dropped without breaking is floor nº ${highestDropWithoutBreaking}`
+  );
 }
 
 export default eggFloorFinder;
